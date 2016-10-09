@@ -1,0 +1,40 @@
+{% extends "AppBundle:Accueil:index.html.twig" %}
+
+{% block list  %}
+<table class="table-condensed table-hover table-stripped table">
+	<thead>
+		<tr>
+			<th>
+			    {{ 'app.list.column1' | trans }}
+			</th>
+			<th>
+				{{ 'app.list.column2' | trans }}
+			</th>
+			<th>
+				{{ 'app.list.column3' | trans }}
+			</th>
+			<th>
+				{{ 'app.list.column4' | trans }}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+			une colonne1
+			</td>
+			<td>
+			une colonne2
+			</td>
+			<td>
+			une colonne3
+			</td>
+			<td>
+			une colonne4
+			</td>
+		</tr>
+	</tbody>
+
+</table>
+
+{% endblock %}

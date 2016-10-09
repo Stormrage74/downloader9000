@@ -1,0 +1,63 @@
+// Import Bootstrap Compass integration
+@import "bootstrap-compass";
+
+// Import custom Bootstrap variables
+@import "bootstrap-variables";
+
+// Import Bootstrap for Sass
+@import "bootstrap";
+
+//config custom
+@import "config";
+
+// BLOCK FONT_FACE
+@font-face {
+	font-family: 'pixel_venture';
+	src: url('3Dventure.ttf') 	;
+}
+
+@font-face {
+    font-family: pixelfont; /*a name to be used later*/
+    src: url('web/assets/font/pixel2/slkscr.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: pixelfont-e; /*a name to be used later*/
+    src: url('web/assets/font/pixel2/slkscre.ttf'); /*URL to font*/
+
+}
+
+@font-face {
+    font-family: pixelfont-b; /*a name to be used later*/
+    src: url('web/assets/font/pixel2/slkscrb.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: pixelfont-eb; /*a name to be used later*/
+    src: url('web/assets/font/slkscreb.ttf'); /*URL to font*/
+}
+// ENDBLOCK 
+
+
+
+#main_title{
+	background: #000;
+
+	color: #17CBFF;
+	padding-left: 20px;
+	//font-family: pixelfont;
+	font-family: 'pixel_venture';
+	font-size: 40px;
+
+}
+
+
+.inputGroup {	
+	input[type="text"] {
+		width: 100%;
+		}
+}
+
+.table {
+	font-size: 12px;
+}

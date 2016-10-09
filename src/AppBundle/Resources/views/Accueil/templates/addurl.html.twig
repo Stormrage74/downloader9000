@@ -1,0 +1,21 @@
+{% extends "AppBundle:Accueil:index.html.twig" %}
+
+{% block bottom_content %}
+
+{{ form_start(form) }}
+	<div class="inputGroup col-md-12" >
+		<div>
+		    {{ form_label(form.filename) }}
+		</div>
+		<div class="col-md-12">
+		    {{ form_errors(form.filename) }}
+		    {{ form_widget(form.filename) }}
+		</div>
+	</div>
+	<div class="action_add">
+			{{ form_widget(form.add) }}
+	</div>
+      {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+    
+{% endblock %}

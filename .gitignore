@@ -8,5 +8,8 @@
 /app/phpunit.xml
 /build/
 /vendor/
+/old/
+/.sass-cache/
+/.settings/
 /bin/
 /composer.phar

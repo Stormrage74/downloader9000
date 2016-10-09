@@ -1,7 +1,66 @@
 {% extends "::base.html.twig" %}
+{% block stylesheets %}
+{% endblock %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ 'app.common.title' | trans }}{% endblock %}
 
 {% block body %}
-<h1>Downloader 9000</h1>
+<div id="main_title">
+	Downloader 9000
+</div>
+<div class="container-fluid">
+	<div class="row">
+	<!-- body en entier -->
+		<div class="row" >
+		<!-- navigation en entier -->
+			<div class="col-md-12">
+				<div class="col-md-1 col-sm-3">
+					<a href="{{ path('d9_accueil_app') }}">
+						{{ 'app.nav.index' | trans }}
+					</a>
+				</div>
+				<div class=" col-md-1 col-sm-3">
+					<a href="{{ path('d9_add_url_app') }}">
+						{{ 'app.nav.action1' | trans }}
+					</a>
+				</div>
+				<div class=" col-md-1 col-sm-3">
+    				<a href="{{ path('d9_config_app') }}">
+    					{{ 'app.nav.action2' | trans }}
+					</a>
+				</div>
+				<div class=" col-md-1 col-sm-3">
+    				<a href="{{ path('d9_logout_app') }}">
+    					{{ 'app.nav.action3' | trans }}
+    				</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		<!-- contenu principal en entier -->
+			<div class="col-md-3">
+			<!-- nav_content en entier -->
+			{% block nav_content %}
+			{% endblock %}
+			</div>
+			<div class="col-md-9">
+				<div class="col-md-12">
+			    {% block middle_content %}
+				{% endblock %}
+				</div>
+				<div class="col-md-12">
+				{% block list %}
+				{% endblock %}
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+					{% block bottom_content %}
+					{% endblock %}
+			</div>
+		</div>
+	
+	</div>
+</div>
 {% endblock %}

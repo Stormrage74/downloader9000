@@ -1,0 +1,19 @@
+app:
+    common:
+      title: Downloader 9000
+      filename: url du fichier
+      add: ajouter url
+        
+    nav:
+      index: Accueil
+      action1: Ajouter
+      action2: Parametres
+      action3: Quitter
+    
+    list:
+      column1: Nom
+      column2: Avancement
+      column3: Taille
+      column4: Vitesse
+      column4: Date debut
+      
