@@ -4,22 +4,20 @@ namespace AppBundle\Service;
 
 class Aria2
 {
-	private $server;
-	private $port;
-	private $jsonPath;
+	protected $server;
 	protected $ch;
 	protected $options;
 	
 	public function __construct($server) {
 		
 		$this->server = $server;
-		$this->ch = curl_init($server."?");
-		$options = array(
-				CURLOPT_RETURNTRANSFER	=>	true,
-				CURLOPT_HEADER			=> false
-		);
+		$this->ch = curl_init($server);
+		curl_setopt_array($this->ch, array(
+				CURLOPT_POST=>true,
+				CURLOPT_RETURNTRANSFER=>true,
+				CURLOPT_HEADER=> false
+		));
 		
-		curl_setopt_array($this->ch, $options);
 	}
 	
 	public function __call($name, $arg)
@@ -37,6 +35,12 @@ class Aria2
 		}
 		curl_close($this->ch);
 		return json_decode($response, 1);
+	}
+	
+	protected function req($data)
+	{
+		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $data);
+		return curl_exec($this->ch);
 	}
 	
 	public function __destruct()
@@ -60,9 +64,8 @@ class Aria2
 		$this->server = $server;
 		return $this;
 	}
-	
 
-	
+	/*
 	// On parcourt les POST et on construit un appel vers le RPC
 	public function multicall()
 	{
@@ -77,12 +80,6 @@ class Aria2
 		}
 		return $response;
 	}
-	
+	*/
 	// Construction de l'URL à requêter à partir du tableau de paramètres
-	
-	protected function req($data)
-	{
-		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $data);
-		return curl_exec($this->ch);
-	}
 }

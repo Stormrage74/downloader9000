@@ -63,9 +63,7 @@ class DefaultController extends Controller
     	}
     	
     	if(!empty($data->getFileName())) {
-    		
-    		dump($data->getFileName());
-    		
+    		 
     		if(null !== $this->get('session')->set('aria2_cur_run', $aria)) {
     			$uris = array($data->getFileName());
     			$this->aria2->addUri([$uris]);
@@ -74,12 +72,13 @@ class DefaultController extends Controller
     			$server='http://192.168.0.11';
     			$port = '6800';
     			$jsonPath = '/jsonrpc';
-    			$chaine = $server .":".$port."".$jsonPath;
+    			$chaine = $server .':'.$port.''.$jsonPath;
+    			dump($chaine);
     			// construction du cluster
-    			$aria2 = new Aria2($chaine);
+    		//	$aria2 = new Aria2($chaine);
     			// mise en session
     			$this->get('session')->set('aria2_server', $chaine);
-    			$this->get('session')->set('aria2_cur_run', $aria2);
+    			//$this->get('session')->set('aria2_cur_run', $aria2);
     		}
     		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
     				'form'	=>	$form->createView()
