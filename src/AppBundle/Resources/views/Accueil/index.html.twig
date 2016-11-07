@@ -4,8 +4,8 @@
 <script type="text/javascript">
 
     var urlInfos = "/app_dev.php/generalInfo";
-    var urlStatus = "/app_dev.php/statusInfo";
-    var interval = 1000 * 10 * 1; // ms * s * m 
+    var urlStatus = "{{ path('d9_status_app', {'gid' : "PLACEHOLDER"}) }}";
+    var interval = 1000 * 1 * 1; // ms * s * m 
     
     $(document).ready(function() {
     	setInterval(refreshInfos, interval);
@@ -14,7 +14,7 @@
     function refreshInfos() {
     	$.ajax({
     		url: urlInfos,
-    		type : 'GET',
+    		type : 'POST',
     		dataType : 'json',
     		success: function(data) {
         		setDownloadlist(data['DLList'])
@@ -33,7 +33,7 @@
     		if(dom_entry === null){
     			let html = "<tr id='"+entry+"'>";
     			html += "<td><div>"+variable['id']+"</div></td>";
-    			html += "<td><div onclick='gidInfos()' class='gidClick'>"+variable['gid']+"</div></td>";
+    			html += "<td><div onclick='gidInfos(this)' class='gidClick'>"+variable['gid']+"</div></td>";
 				html += "</tr>";
 				$('tbody').append(html);
             } else {
@@ -41,16 +41,25 @@
             }
     	}
     }
-
-    function gidInfos(){
-
-        console.log($(this));
+    function gidInfos(event){
+    	let value = $(event).text()
+        let url = urlStatus.replace("PLACEHOLDER", value);;
+       // var value = $(event).text();
+      // console.log();
+      	let key = 'gid'
+       
+        console.log(url);
     	 $.ajax({
-     		url: urlStatus,
-     		type : 'GET',
-     		dataType : 'json',
+     		url: url,
+     		type: 'POST',
+     		dataType: 'html',
      		success: function(data) {
-     			setGidInfo(data['status'])
+         		console.log($('#rightContent').children().length);
+         		if($('#rightContent').children().length > 0)
+             		{
+         				$('#rightContent').empty();
+         			}
+         		$('#rightContent').append(data);
      		},
      		error: function() {
      			console.log('error');
@@ -119,6 +128,8 @@
 				</div>
 				<div class="col-md-7">
 				{% block right_content %}
+				<div id="rightContent" class="row">
+				</div>
 				{% endblock %}
 				</div>
 			</div>

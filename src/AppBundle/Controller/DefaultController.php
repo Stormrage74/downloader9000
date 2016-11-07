@@ -82,29 +82,28 @@ class DefaultController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getStatus(Request $request) {
-    	dump('here');
     	if ($request->isXmlHttpRequest()) {
-    		$status_list = array();
-    		$id = $request->query->get('gid');
-    		dump($id);
-    		if (!isset($id) || $id === null){
-	    		$response = new Response(json_encode(array(
-	    			'status' => $status_list
-	    		)));
-	    		return $response;
+    		$gid = $request->query->get('gid');
+    		if (!isset($gid) || $gid === null){
+	    		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
+    			//...
+    			));
     		}
     		
     		// from RPC
     		$rpc = $this->newCluster();
-	    	foreach ($id as $gid){
-	    		$status = $rpc->tellStatus($gid);
-	    		dump($status);
-	    		array_push($status_list, $status);
-	    	}
-    		$response = new Response(json_encode(array(
-    			'status' => $status_list
-    		)));
-    		return $response;
+	    	$status = $rpc->tellStatus($gid);
+	    	$results = $status['result'];
+    		return $this->render('AppBundle:Accueil/templates:right_content.html.twig', array(
+    			'status'	=> $results['status'],
+    			'size'		=> number_format((($results['totalLength']/8)/1000000), 3),
+    			'speed'		=> $results['downloadSpeed'],
+    			'parts'		=> $results['numPieces'],
+    			'pieceLength' 	=> $results['pieceLength'],
+    			'connections'	=> $results['connections'],
+    			'dir'		=> $results['dir'],
+    			'errorCode'	=> $results['errorCode']
+    		));
     	}
     	throw new MethodNotAllowedHttpException(array('AJAX'));
     }
@@ -140,6 +139,7 @@ class DefaultController extends Controller
     		$rpc = $this->newCluster();
     		$gid = $rpc->addUri($uris);
     		dump($gid);
+    		//TODO: insert gid to download table or abort download
     		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
     				'form'	=>	$form->createView()
     		));

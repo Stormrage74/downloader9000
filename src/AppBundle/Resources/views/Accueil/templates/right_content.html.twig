@@ -1,42 +1,36 @@
-{% extends "AppBundle:Accueil:index.html.twig" %}
-
-{% block right_content %}
-<div id="rightContent" class="row">
 	<div class="row">
-		<div id="status">Status</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Status</div>
+		<div name="data" class="col-md-5">{{ status }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Size</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Size</div>
+		<div name="data" class="col-md-5">{{ size }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Speed</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Speed</div>
+		<div name="data" class="col-md-5">{{ speed }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Parts</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Parts</div>
+		<div name="data" class="col-md-5">{{ parts }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Parts lenght</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Parts lenght</div>
+		<div name="data" class="col-md-5">{{ pieceLength }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Nbr. connexions</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Nbr. connexions</div>
+		<div name="data" class="col-md-5">{{ connections }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Error message</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Error message</div>
+		<div name="data" class="col-md-5">{{ errorCode }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Saved to</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Saved to</div>
+		<div name="data" class="col-md-5">{{ dir }}</div>
 	</div>
 	<div class="row">
-		<div id="status">Files</div>
-		<div id="data"></div>
+		<div name="status" class="col-md-5">Files</div>
+		<div name="data" class="col-md-5"></div>
 	</div>
-</div>
-{% endblock %}
