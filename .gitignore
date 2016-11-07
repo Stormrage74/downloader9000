@@ -13,3 +13,5 @@
 /.settings/
 /bin/
 /composer.phar
+.settings/
+.project
