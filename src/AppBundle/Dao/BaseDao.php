@@ -1,5 +1,5 @@
 <?php
-
+namespace AppBundle\Dao;
 
 use Doctrine\DBAL\Connection;
 use Symfony\Bridge\Monolog\Logger;

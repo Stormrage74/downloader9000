@@ -13,3 +13,7 @@ services:
         arguments: ["@request_stack"]
         tags:
             - { name: twig.extension }
+    app.download_dao:
+      class: AppBundle\Dao\AriaDaoImpl
+      arguments: ["@database_connection", "@logger"]
+    

@@ -1,55 +1,124 @@
 {% extends "::base.html.twig" %}
-{% block stylesheets %}
+
+{% block javascripts %}
+<script type="text/javascript">
+
+    var urlInfos = "/app_dev.php/generalInfo";
+    var urlStatus = "/app_dev.php/statusInfo";
+    var interval = 1000 * 10 * 1; // ms * s * m 
+    
+    $(document).ready(function() {
+    	setInterval(refreshInfos, interval);
+    });
+    // AJAX to get info from controller 
+    function refreshInfos() {
+    	$.ajax({
+    		url: urlInfos,
+    		type : 'GET',
+    		dataType : 'json',
+    		success: function(data) {
+        		setDownloadlist(data['DLList'])
+    		},
+    		error: function() {
+    			console.log('error');
+    		}
+    	})
+    }
+
+	// treat AJAX RESPONSE to set download list view
+    function setDownloadlist(dlList) {
+    	for (let variable of dlList) {
+    		let entry = 'entry_'+variable['gid'];
+    		let dom_entry = document.getElementById(entry);
+    		if(dom_entry === null){
+    			let html = "<tr id='"+entry+"'>";
+    			html += "<td><div>"+variable['id']+"</div></td>";
+    			html += "<td><div onclick='gidInfos()' class='gidClick'>"+variable['gid']+"</div></td>";
+				html += "</tr>";
+				$('tbody').append(html);
+            } else {
+				console.log(entry+' already exist');
+            }
+    	}
+    }
+
+    function gidInfos(){
+
+        console.log($(this));
+    	 $.ajax({
+     		url: urlStatus,
+     		type : 'GET',
+     		dataType : 'json',
+     		success: function(data) {
+     			setGidInfo(data['status'])
+     		},
+     		error: function() {
+     			console.log('error');
+     		}
+     	})
+    }
+
+	// treat AJAX RESPONSE to set selected download status
+    function setGidInfo(status){
+    	for (let variable of status) {
+
+        }
+    }
+
+</script>
 {% endblock %}
 
 {% block title %}{{ 'app.common.title' | trans }}{% endblock %}
 
 {% block body %}
-<div id="main_title">
-	Downloader 9000
+<div class="main_header">
+	<div class="row" >
+		<div class="col-md-5 main_title">
+			Downloader 9000
+		</div>
+		<!-- navigation en entier -->
+		<div class="col-md-7 col-sm-9 menu">
+			<div class="col-md-05 col-sm-1 action">
+				<a href="{{ path('d9_accueil_app') }}">
+					{{ 'app.nav.index' | trans }}
+				</a>
+			</div>
+			<div class=" col-md-05 col-sm-1 action ">
+				<a href="{{ path('d9_add_url_app') }}" > 
+					{{ 'app.nav.action1' | trans }}
+				</a>
+			</div>
+			<div class=" col-md-05 col-sm-1 action">
+				<a href="{{ path('d9_config_app') }}">
+					{{ 'app.nav.action2' | trans }}
+				</a>
+			</div>
+			<div class=" col-md-05 col-sm-1 action">
+				<a href="{{ path('d9_logout_app') }}">
+					{{ 'app.nav.action3' | trans }}
+				</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="container-fluid">
 	<div class="row">
 	<!-- body en entier -->
-		<div class="row" >
-		<!-- navigation en entier -->
-			<div class="col-md-12">
-				<div class="col-md-1 col-sm-3">
-					<a href="{{ path('d9_accueil_app') }}">
-						{{ 'app.nav.index' | trans }}
-					</a>
-				</div>
-				<div class=" col-md-1 col-sm-3">
-					<a href="{{ path('d9_add_url_app') }}">
-						{{ 'app.nav.action1' | trans }}
-					</a>
-				</div>
-				<div class=" col-md-1 col-sm-3">
-    				<a href="{{ path('d9_config_app') }}">
-    					{{ 'app.nav.action2' | trans }}
-					</a>
-				</div>
-				<div class=" col-md-1 col-sm-3">
-    				<a href="{{ path('d9_logout_app') }}">
-    					{{ 'app.nav.action3' | trans }}
-    				</a>
-				</div>
-			</div>
-		</div>
 		<div class="row">
 		<!-- contenu principal en entier -->
-			<div class="col-md-3">
+			<div class="col-md-2 leftPanel">
 			<!-- nav_content en entier -->
 			{% block nav_content %}
+				graphique1
 			{% endblock %}
 			</div>
-			<div class="col-md-9">
-				<div class="col-md-12">
+			<div class="col-md-10">
+				<div class="col-md-5">
 			    {% block middle_content %}
 				{% endblock %}
 				</div>
-				<div class="col-md-12">
-				{% block list %}
+				<div class="col-md-7">
+				{% block right_content %}
 				{% endblock %}
 				</div>
 			</div>

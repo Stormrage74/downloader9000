@@ -8790,7 +8790,7 @@ button.close {
 }
 @font-face {
   font-family: 'pixel_venture';
-  src: url("3Dventure.ttf");
+  src: url("web/assets/font/pixel1/3Dventure.ttf");
 }
 @font-face {
   font-family: pixelfont;
@@ -8816,21 +8816,59 @@ button.close {
   src: url("web/assets/font/slkscreb.ttf");
   /*URL to font*/
 }
-/* line 43, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
-#main_title {
-  background: #000;
-  color: #17CBFF;
+/* line 42, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 45, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.main_header {
+  background: #222;
   padding-left: 20px;
-  font-family: 'pixel_venture';
-  font-size: 40px;
+  height: 40px;
+}
+
+/* line 52, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.gidClick {
+  cursor: pointer;
 }
 
 /* line 56, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.action {
+  font-size: 22px;
+  height: 40px;
+  padding: 2px;
+}
+
+/* line 62, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.menu {
+  height: 40px;
+}
+
+/* line 66, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.leftPanel {
+  background: #6A93B7;
+  height: 100%;
+}
+
+/* line 70, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.main_title {
+  color: #17CBFF;
+  font-size: 28px;
+}
+
+/* line 76, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .inputGroup input[type="text"] {
   width: 100%;
 }
 
-/* line 61, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 81, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .table {
   font-size: 12px;
+}
+
+/* line 85, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.col-md-05 {
+  width: 20%;
+  text-align: center;
 }

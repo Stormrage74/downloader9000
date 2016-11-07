@@ -22,6 +22,8 @@ class Aria2
 	
 	public function __call($name, $arg)
 	{
+		dump($name);
+		dump($arg);
 		$data = array(
 				'jsonrpc'=>'2.0',
 				'id'=>'1',
@@ -33,7 +35,12 @@ class Aria2
 		if($response===false) {
 			trigger_error(curl_error($this->ch));
 		}
-		curl_close($this->ch);
+		
+// 		if ($this->ch !== null) {
+// 			curl_close($this->ch);
+// 			$this->ch = null;
+// 		}
+		
 		return json_decode($response, 1);
 	}
 	
@@ -43,9 +50,12 @@ class Aria2
 		return curl_exec($this->ch);
 	}
 	
-	public function __destruct()
+	public function destruct()
 	{
-		curl_close($this->ch);
+		if ($this->ch !== null) {
+			curl_close($this->ch);
+			$this->ch = null;
+		}
 	}
 	
 	function getServer() {

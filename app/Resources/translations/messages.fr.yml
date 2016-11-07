@@ -11,9 +11,11 @@ app:
       action3: Quitter
     
     list:
-      column1: Nom
-      column2: Avancement
-      column3: Taille
-      column4: Vitesse
-      column4: Date debut
+      column1: Id
+      column2: Gid
+      column3: Nom
+      column4: Avancement
+      column5: Taille
+      column6: Vitesse
+      column7: Date debut
       

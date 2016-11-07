@@ -13,7 +13,7 @@
 // BLOCK FONT_FACE
 @font-face {
 	font-family: 'pixel_venture';
-	src: url('3Dventure.ttf') 	;
+	src: url('web/assets/font/pixel1/3Dventure.ttf') 	;
 }
 
 @font-face {
@@ -39,18 +39,38 @@
 // ENDBLOCK 
 
 
-
-#main_title{
-	background: #000;
-
-	color: #17CBFF;
+html, body{
+	height: 100%;
+}	
+.main_header{
+	//font-family: pixel_venture;
+	background: #222;
 	padding-left: 20px;
-	//font-family: pixelfont;
-	font-family: 'pixel_venture';
-	font-size: 40px;
-
+	height: 40px;
 }
 
+.gidClick {
+	cursor: pointer;
+}
+
+.action {
+	font-size: 22px;
+	height: 40px;
+	padding: 2px;
+}
+
+.menu {
+	height: 40px;
+}
+
+.leftPanel {
+	background: #6A93B7	;
+	height: 100%;
+}
+.main_title {
+	color: #17CBFF;
+	font-size: 28px;
+}
 
 .inputGroup {	
 	input[type="text"] {
@@ -60,4 +80,9 @@
 
 .table {
 	font-size: 12px;
+}
+
+.col-md-05 {
+	width: 20%;
+	text-align: center;
 }
