@@ -7,9 +7,14 @@
 !app/logs/.gitkeep
 /app/phpunit.xml
 /build/
-/vendor/
 /old/
 /.sass-cache/
 /.settings/
 /bin/
 /composer.phar
+/composer.bat
+/composer
+/.project
+/.buildpath
+/composer.json
+/composer.lock
