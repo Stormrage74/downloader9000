@@ -38,7 +38,7 @@ class AriaDaoImpl extends BaseDao
 		$result = false;
 		
 		if ($aria !== null) {
-			$sql = "";
+			$sql = "INSERT INTO downloads(gid) VALUES ('".$aria->getGid()."')";
 			$result = $this->insertData($sql);
 			dump($result);
 		}

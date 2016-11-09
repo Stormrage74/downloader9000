@@ -94,15 +94,16 @@ class DefaultController extends Controller
     		$rpc = $this->newCluster();
 	    	$status = $rpc->tellStatus($gid);
 	    	$results = $status['result'];
+	    	dump($results['totalLength']);
     		return $this->render('AppBundle:Accueil/templates:right_content.html.twig', array(
-    			'status'	=> $results['status'],
-    			'size'		=> number_format((($results['totalLength']/8)/1000000), 3),
+    			'status'	=> $results['status'] ? $results['status'] : 'not define',
+    			'size'		=> number_format((($results['totalLength']/1024)/1024)) . " Mo",
     			'speed'		=> $results['downloadSpeed'],
     			'parts'		=> $results['numPieces'],
     			'pieceLength' 	=> $results['pieceLength'],
     			'connections'	=> $results['connections'],
-    			'dir'		=> $results['dir'],
-    			'errorCode'	=> $results['errorCode']
+    			'dir'		=> $results['dir']
+    		//	'errorCode'	=> $results['errorCode'] ? $results['errorCode'] : 'not define'
     		));
     	}
     	throw new MethodNotAllowedHttpException(array('AJAX'));
@@ -139,6 +140,10 @@ class DefaultController extends Controller
     		$rpc = $this->newCluster();
     		$gid = $rpc->addUri($uris);
     		dump($gid);
+    		$aria = new Aria();
+    		$aria->setGid($gid['result']);
+    		$result = $this->get(AppBundle::DAO_DL)->addDownload($aria);
+    		
     		//TODO: insert gid to download table or abort download
     		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
     				'form'	=>	$form->createView()
