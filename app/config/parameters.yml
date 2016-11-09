@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 192.168.0.17
+    database_port: 5432
+    database_name: downloader
+    database_user: downloader
+    database_password: Down9loader0
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: c1e77a0dcce099528e440fa425e0fa175630ef86
