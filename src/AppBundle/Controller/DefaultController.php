@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Model\Aria;
+use AppBundle\Model\Download;
 use AppBundle\Form\AriaType;
 use AppBundle\Service\Aria2;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -94,16 +95,20 @@ class DefaultController extends Controller
     		$rpc = $this->newCluster();
 	    	$status = $rpc->tellStatus($gid);
 	    	$results = $status['result'];
+	    	$download = new Download();
+	    	$download	->setStatus(isset($results['status']) ? $results['status'] : null)
+	    				->setTotalLength(isset($results['totalLength']) ? (($results['totalLength']/1024)/1024) : null)
+	    				->setDownloadSpeed(isset($results['downloadSpeed']) ? $results['downloadSpeed'] . " Mo" : null)
+	    				->setNumPieces(isset($results['numPieces']) ? $results['numPieces'] : null)
+	    				->setPieceLength(isset($results['pieceLength']) ? $results['pieceLength'] : null)
+	    				->setConnections($results['connections'] ? $results['connections'] : null)
+	    				->setDir(isset($results['dir']) ? $results['dir'] : null)
+	    				->setErrorCode(isset($results['errorCode']) ? $results['errorCode'] : null)
+	    				->setErrorMessage(isset($results['errorMessage']) ? $results['errorMessage']: null);
+	    	
 	    	dump($results['totalLength']);
     		return $this->render('AppBundle:Accueil/templates:right_content.html.twig', array(
-    			'status'	=> $results['status'] ? $results['status'] : 'not define',
-    			'size'		=> number_format((($results['totalLength']/1024)/1024)) . " Mo",
-    			'speed'		=> $results['downloadSpeed'],
-    			'parts'		=> $results['numPieces'],
-    			'pieceLength' 	=> $results['pieceLength'],
-    			'connections'	=> $results['connections'],
-    			'dir'		=> $results['dir']
-    		//	'errorCode'	=> $results['errorCode'] ? $results['errorCode'] : 'not define'
+    			'download'	=>  $download
     		));
     	}
     	throw new MethodNotAllowedHttpException(array('AJAX'));
