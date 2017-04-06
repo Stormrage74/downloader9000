@@ -90,27 +90,29 @@ class DefaultController extends Controller
     			//...
     			));
     		}
-    		
+    		$download = new Download();
     		// from RPC
     		$rpc = $this->newCluster();
-	    	$status = $rpc->tellStatus($gid);
-	    	$results = $status['result'];
-	    	$download = new Download();
+	    	$results = $rpc->tellStatus($gid);
+	    	dump($results);
+// 	    	if ($results['error']) {
+// 	    		echo 'good';
+// 	    	} else {
+	    	// $results = $status['result'];
 	    	$download	->setStatus(isset($results['status']) ? $results['status'] : null)
 	    				->setTotalLength(isset($results['totalLength']) ? (($results['totalLength']/1024)/1024) : null)
 	    				->setDownloadSpeed(isset($results['downloadSpeed']) ? $results['downloadSpeed'] . " Mo" : null)
 	    				->setNumPieces(isset($results['numPieces']) ? $results['numPieces'] : null)
 	    				->setPieceLength(isset($results['pieceLength']) ? $results['pieceLength'] : null)
-	    				->setConnections($results['connections'] ? $results['connections'] : null)
+	    				->setConnections(isset($results['connections']) ? $results['connections'] : null)
 	    				->setDir(isset($results['dir']) ? $results['dir'] : null)
 	    				->setErrorCode(isset($results['errorCode']) ? $results['errorCode'] : null)
 	    				->setErrorMessage(isset($results['errorMessage']) ? $results['errorMessage']: null);
-	    	
-	    	dump($results['totalLength']);
+	    	}
     		return $this->render('AppBundle:Accueil/templates:right_content.html.twig', array(
     			'download'	=>  $download
     		));
-    	}
+//     	}
     	throw new MethodNotAllowedHttpException(array('AJAX'));
     }
     

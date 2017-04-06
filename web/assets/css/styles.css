@@ -8816,58 +8816,58 @@ button.close {
   src: url("web/assets/font/slkscreb.ttf");
   /*URL to font*/
 }
-/* line 42, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 43, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 html, body {
   height: 100%;
 }
 
-/* line 45, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 46, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .main_header {
   background: #222;
   padding-left: 20px;
   height: 40px;
 }
 
-/* line 52, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 53, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .gidClick {
   cursor: pointer;
 }
 
-/* line 56, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 57, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .action {
   font-size: 22px;
   height: 40px;
   padding: 2px;
 }
 
-/* line 62, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 63, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .menu {
   height: 40px;
 }
 
-/* line 66, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 67, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .leftPanel {
   background: #6A93B7;
   height: 100%;
 }
 
-/* line 70, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 71, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .main_title {
   color: #17CBFF;
   font-size: 28px;
 }
 
-/* line 76, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 77, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .inputGroup input[type="text"] {
   width: 100%;
 }
 
-/* line 81, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 82, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .table {
   font-size: 12px;
 }
 
-/* line 85, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 86, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .col-md-05 {
   width: 20%;
   text-align: center;

@@ -10,7 +10,6 @@
 //config custom
 @import "config";
 
-// BLOCK FONT_FACE
 @font-face {
 	font-family: 'pixel_venture';
 	src: url('web/assets/font/pixel1/3Dventure.ttf') 	;
@@ -36,8 +35,10 @@
     font-family: pixelfont-eb; /*a name to be used later*/
     src: url('web/assets/font/slkscreb.ttf'); /*URL to font*/
 }
-// ENDBLOCK 
 
+@media print {
+	
+}
 
 html, body{
 	height: 100%;
