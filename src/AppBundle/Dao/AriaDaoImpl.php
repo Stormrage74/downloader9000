@@ -17,7 +17,7 @@ class AriaDaoImpl extends BaseDao
 		
 		$result = $this->doSelectFromQueryBuilder($query);
 		dump($result);
-		if($result !== null) {
+		if($result !== null && $result !== false) {
 			$downloadList = array();
 			foreach ($result as $row) {
 				dump($row);
