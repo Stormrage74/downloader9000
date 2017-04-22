@@ -3,144 +3,148 @@
 {% block javascripts %}
 <script type="text/javascript">
 
-    var urlInfos = "/app_dev.php/generalInfo";
-    var urlStatus = "{{ path('d9_status_app', {'gid' : "PLACEHOLDER"}) }}";
-    var interval = 1000 * 2 * 1; // ms * s * m 
-    
-    $(document).ready(function() {
-    	setInterval(refreshInfos, interval);
-    });
-    // AJAX to get info from controller 
-    function refreshInfos() {
-    	$.ajax({
-    		url: urlInfos,
-    		type : 'POST',
-    		dataType : 'json',
-    		success: function(data) {
-        		setDownloadlist(data['DLList'])
-    		},
-    		error: function() {
-    			console.log('error');
-    		}
-    	})
-    }
+	var urlInfos = "/app_dev.php/generalInfo"; //TODO : use asset twig instead
+	var urlStatus = "{{ path('d9_status_app', {'gid' : 'PLACEHOLDER'}) }}";
+	var urlAddUrl = "{{ path('d9_add_url_app', {'url' : 'PLACEHOLDER'}) }}";
+	var interval = 1000 * 2 * 1; // ms * s * m 
+	var cluster = "{{ app.session.get('aria2_server') }}";
+	
+	$(document).ready(function() {
+		//setInterval(refreshInfos, interval);
+		$('#addUrl_valider').click(function () {
+			console.log('pret');
+		});
+	});
+
+	// AJAX to get info from controller 
+	function refreshInfos() {
+		$.ajax({
+			url: urlInfos,
+			type : 'POST',
+			dataType : 'json',
+			success: function(data) {
+				constructDList(data);
+			},
+			error: function() {
+				console.log('error');
+			}
+		})
+	}
 
 	// treat AJAX RESPONSE to set download list view
-    function setDownloadlist(dlList) {
-    	for (let variable of dlList) {
-    		let entry = 'entry_'+variable['gid'];
-    		let dom_entry = document.getElementById(entry);
-    		if(dom_entry === null){
-    			let html = "<tr id='"+entry+"'>";
-    			html += "<td><div>"+variable['id']+"</div></td>";
-    			html += "<td><div onclick='gidInfos(this)' class='gidClick'>"+variable['gid']+"</div></td>";
+	function constructDList(data) {
+		for (var dl of data['DLList']) {
+			var id = 'dl_'+dl['gid'];
+			var elem = document.getElementById(id);
+			if(elem === null){
+				var html = "<tr id='"+id+"'>";
+				html += "<td>"+dl['id']+"</td>";
+				html += "<td onclick='gidInfos(this)' class='gidClick'>"+dl['gid']+"</td>";
 				html += "</tr>";
 				$('tbody').append(html);
-            } else {
-				console.log(entry+' already exist');
-            }
-    	}
-    }
-    function gidInfos(event){
-    	let value = $(event).text()
-        let url = urlStatus.replace("PLACEHOLDER", value);;
-       // var value = $(event).text();
-      // console.log();
-      	let key = 'gid'
-       
-        console.log(url);
-    	 $.ajax({
-     		url: url,
-     		type: 'POST',
-     		dataType: 'html',
-     		success: function(data) {
-         		console.log($('#rightContent').children().length);
-         		if($('#rightContent').children().length > 0)
-             		{
-         				$('#rightContent').empty();
-         			}
-         		$('#rightContent').append(data);
-     		},
-     		error: function() {
-     			console.log('error');
-     		}
-     	})
-    }
+			} else {
+				console.log(elem+' already exist');
+			}
+		}
+	}
+
+	function gidInfos(e) {
+		let value = $(e).text()
+		let url = urlStatus.replace("PLACEHOLDER", value);;
+	  	let key = 'gid'
+		 $.ajax({
+	 		url: url,
+	 		type: 'POST',
+	 		dataType: 'html',
+	 		success: function(data) {
+		 		if($('#leftContent').children().length > 0)
+			 		{
+		 				$('#leftContent').empty();
+		 			}
+		 		$('#leftContent').append(data);
+	 		},
+	 		error: function() {
+	 			console.log('error');
+	 		}
+	 	})
+	}
 
 	// treat AJAX RESPONSE to set selected download status
-    function setGidInfo(status){
-    	for (let variable of status) {
+	function setGidInfo(status) {
+		for (let variable of status) {
 
-        }
-    }
+		}
+	}
 
 </script>
 {% endblock %}
 
-{% block title %}{{ 'app.common.title' | trans }}{% endblock %}
+{% block title %}
+{{ 'app.common.title' | trans }}
+{% endblock %}
 
 {% block body %}
 <div class="main_header">
-	<div class="row" >
+	<div class="row">
 		<div class="col-md-5 main_title">
-			Downloader 9000
+    		<a href="{{ path('d9_accueil_app') }}">
+    			{{ 'app.common.title' | trans }}
+    		</a>
 		</div>
-		<!-- navigation en entier -->
-		<div class="col-md-7 col-sm-9 menu">
-			<div class="col-md-05 col-sm-1 action">
-				<a href="{{ path('d9_accueil_app') }}">
-					{{ 'app.nav.index' | trans }}
-				</a>
-			</div>
-			<div class=" col-md-05 col-sm-1 action ">
-				<a href="{{ path('d9_add_url_app') }}" > 
-					{{ 'app.nav.action1' | trans }}
-				</a>
-			</div>
-			<div class=" col-md-05 col-sm-1 action">
-				<a href="{{ path('d9_config_app') }}">
-					{{ 'app.nav.action2' | trans }}
-				</a>
-			</div>
-			<div class=" col-md-05 col-sm-1 action">
-				<a href="{{ path('d9_logout_app') }}">
-					{{ 'app.nav.action3' | trans }}
-				</a>
+			
+		<div id="system_info">
+			<div id="cluster">
+			{% if app.session.get('aria2_server') is not empty %}
+				<div id="clusterOn">
+					Aria2 ONLINE
+				</div>
+			{% else %}
+				<div id="clusterOff">
+					Aria2 OFFLINE
+				</div>
+			{% endif %}
 			</div>
 		</div>
 	</div>
 </div>
 <div class="container-fluid">
 	<div class="row">
-	<!-- body en entier -->
-		<div class="row">
-		<!-- contenu principal en entier -->
-			<div class="col-md-2 leftPanel">
-			<!-- nav_content en entier -->
+		<div class="col-md-2 leftPanel">
 			{% block nav_content %}
-				graphique1
+			<div id="leftContent"></div>
 			{% endblock %}
-			</div>
-			<div class="col-md-10">
-				<div class="col-md-5">
-			    {% block middle_content %}
+		</div>
+		<div class="col-md-8">
+			{% block middle_content %}
+			{% endblock %}
+		</div>
+		<div class="col-md-2">
+			{% block right_content %}
+			<div id="rightContent">
+				<div id="quickActionList" class="col-md-12">
+					<div id="actionTitle">Actions simples</div>
+					<div id="actionContent">
+						<div id="actionRefresh" class="quickAction"
+							onclick="refreshInfos()">&#187; Refresh</div>
+						<div id="actionAdd" class="quickAction" data-toggle="modal"
+							data-target="#modal_addUrl">
+							&#187;
+							{{ 'app.nav.action1' | trans }}
+						</div>
+					</div>
+				</div>
 				{% endblock %}
-				</div>
-				<div class="col-md-7">
-				{% block right_content %}
-				<div id="rightContent" class="row">
-				</div>
-				{% endblock %}
-				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12">
-					{% block bottom_content %}
-					{% endblock %}
-			</div>
-		</div>
-	
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			{% block bottom_content %}
+			{% endblock %}
+		</div>
+	</div>
+
 </div>
+</div>
+{% include '@App/Accueil/templates/modal_addUrl.html.twig' %}
 {% endblock %}

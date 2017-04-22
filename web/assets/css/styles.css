@@ -8872,3 +8872,54 @@ html, body {
   width: 20%;
   text-align: center;
 }
+
+/* line 91, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+#quickActionList {
+  float: right;
+  color: white;
+  font-weight: bold;
+  background-color: gray;
+}
+
+/* line 100, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.quickAction {
+  cursor: pointer;
+}
+/* line 102, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.quickAction:hover {
+  color: #39FF6B;
+}
+
+/* line 107, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.modal_header {
+  margin: 10px;
+  text-align: center;
+}
+
+/* line 113, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.modal_body {
+  height: 50px;
+}
+
+/* line 117, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.modal_footer {
+  margin-top: 20px;
+  padding: 5px;
+}
+
+/* line 122, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+#addUrl_valider {
+  float: right;
+}
+
+/* line 130, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+#clusterOn {
+  color: green;
+  font-weight: bold;
+}
+
+/* line 135, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+#clusterOff {
+  color: red;
+  font-weight: bold;
+}

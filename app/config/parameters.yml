@@ -1,8 +1,8 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 192.168.0.11
+    database_host: localhost
     database_port: 5432
-    database_name: downloader
+    database_name: loaderdb
     database_user: downloader
     database_password: Down9loader0
     mailer_transport: smtp

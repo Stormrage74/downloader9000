@@ -87,3 +87,52 @@ html, body{
 	width: 20%;
 	text-align: center;
 }
+
+#quickActionList {
+	
+	//width: 166px;
+	float: right;
+	color: white;
+	font-weight: bold;
+	background-color: gray;
+}
+
+.quickAction {
+	cursor: pointer;	
+	&:hover {
+		color: #39FF6B;
+	}
+}
+
+.modal_header {
+	margin: 10px;
+	text-align: center;
+		
+}
+
+.modal_body {
+	height : 50px;
+}
+
+.modal_footer {
+	margin-top: 20px;
+	padding: 5px;
+}
+
+#addUrl_valider {
+	float: right;	
+}
+
+#addUrl_annuler {
+
+}
+
+#clusterOn {
+	color : green;
+	font-weight: bold;
+}
+
+#clusterOff {
+	color: red;
+	font-weight: bold;
+}

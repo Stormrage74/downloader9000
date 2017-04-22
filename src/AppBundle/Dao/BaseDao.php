@@ -33,10 +33,8 @@ class BaseDao {
     public function doSelectQuery($sql){
 
         try{
-
             $data = $this->connection->fetchAll($sql);
             return $data;
-
         } catch (\Exception $ex) {
             $this->logger->critical(
                 $ex->getMessage(),
