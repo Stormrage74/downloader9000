@@ -43,10 +43,9 @@
 html, body{
 	height: 100%;
 }	
-.main_header{
+.main_header {
 	//font-family: pixel_venture;
 	background: #222;
-	padding-left: 20px;
 	height: 40px;
 }
 
@@ -124,15 +123,34 @@ html, body{
 }
 
 #addUrl_annuler {
-
 }
 
-#clusterOn {
+.statusOK {
 	color : green;
 	font-weight: bold;
 }
 
-#clusterOff {
+.statusKO {
 	color: red;
 	font-weight: bold;
+}
+
+#footer_dev  {
+	background-color: orange;
+	font-weight: bold;
+	color: white;
+	bottom: 36px;
+	position: absolute;
+	width: 100%;
+	
+}
+
+/** SURCHARGE **/
+
+.container-fluid {
+	padding: 0px !important;	
+}
+
+.row {
+	margin: 0px !important;	
 }

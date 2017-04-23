@@ -8824,56 +8824,55 @@ html, body {
 /* line 46, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .main_header {
   background: #222;
-  padding-left: 20px;
   height: 40px;
 }
 
-/* line 53, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 52, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .gidClick {
   cursor: pointer;
 }
 
-/* line 57, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 56, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .action {
   font-size: 22px;
   height: 40px;
   padding: 2px;
 }
 
-/* line 63, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 62, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .menu {
   height: 40px;
 }
 
-/* line 67, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 66, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .leftPanel {
   background: #6A93B7;
   height: 100%;
 }
 
-/* line 71, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 70, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .main_title {
   color: #17CBFF;
   font-size: 28px;
 }
 
-/* line 77, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 76, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .inputGroup input[type="text"] {
   width: 100%;
 }
 
-/* line 82, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 81, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .table {
   font-size: 12px;
 }
 
-/* line 86, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 85, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .col-md-05 {
   width: 20%;
   text-align: center;
 }
 
-/* line 91, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 90, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 #quickActionList {
   float: right;
   color: white;
@@ -8881,45 +8880,66 @@ html, body {
   background-color: gray;
 }
 
-/* line 100, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 99, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .quickAction {
   cursor: pointer;
 }
-/* line 102, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 101, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .quickAction:hover {
   color: #39FF6B;
 }
 
-/* line 107, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 106, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .modal_header {
   margin: 10px;
   text-align: center;
 }
 
-/* line 113, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 112, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .modal_body {
   height: 50px;
 }
 
-/* line 117, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 116, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 .modal_footer {
   margin-top: 20px;
   padding: 5px;
 }
 
-/* line 122, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+/* line 121, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
 #addUrl_valider {
   float: right;
 }
 
-/* line 130, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
-#clusterOn {
+/* line 128, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.statusOK {
   color: green;
   font-weight: bold;
 }
 
-/* line 135, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
-#clusterOff {
+/* line 133, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.statusKO {
   color: red;
   font-weight: bold;
+}
+
+/* line 138, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+#footer_dev {
+  background-color: orange;
+  font-weight: bold;
+  color: white;
+  bottom: 36px;
+  position: absolute;
+  width: 100%;
+}
+
+/** SURCHARGE **/
+/* line 150, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.container-fluid {
+  padding: 0px !important;
+}
+
+/* line 154, ../../../src/AppBundle/Resources/assets/sass/styles.scss */
+.row {
+  margin: 0px !important;
 }

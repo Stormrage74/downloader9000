@@ -14,6 +14,8 @@
 		$('#addUrl_valider').click(function () {
 			console.log('pret');
 		});
+
+		ping(cluster);
 	});
 
 	// AJAX to get info from controller 
@@ -33,18 +35,23 @@
 
 	// treat AJAX RESPONSE to set download list view
 	function constructDList(data) {
-		for (var dl of data['DLList']) {
-			var id = 'dl_'+dl['gid'];
-			var elem = document.getElementById(id);
-			if(elem === null){
-				var html = "<tr id='"+id+"'>";
-				html += "<td>"+dl['id']+"</td>";
-				html += "<td onclick='gidInfos(this)' class='gidClick'>"+dl['gid']+"</td>";
-				html += "</tr>";
-				$('tbody').append(html);
-			} else {
-				console.log(elem+' already exist');
+		var dbStatus = databaseStatus(data['db_error']);
+		if(dbStatus == 'OK') {
+			for (var dl of data['DLList']) {
+				var id = 'dl_'+dl['gid'];
+				var elem = document.getElementById(id);
+				if(elem === null){
+					var html = "<tr id='"+id+"'>";
+					html += "<td>"+dl['id']+"</td>";
+					html += "<td onclick='gidInfos(this)' class='gidClick'>"+dl['gid']+"</td>";
+					html += "</tr>";
+					$('tbody').append(html);
+				} else {
+					console.log(elem+' already exist');
+				}
 			}
+		} else {
+			$('tbody').children().remove();
 		}
 	}
 
@@ -76,6 +83,72 @@
 		}
 	}
 
+	function databaseStatus(error){
+		var statusOK = "<div class='statusOK'> Database ONLINE </div>"
+		var statusKO = "<div class='statusKO'> Database OFFLINE </div>"
+		$("#database").children().remove();
+		if(error != null) {
+			$("#database").append(statusKO);
+			console.log('KO');
+			return 'KO';
+		} else {
+			$("#database").append(statusOK);
+			console.log('OK');
+			return 'OK';
+		}
+	}
+
+	function ariaServiceStatus(error){
+		var statusOK = "<div class='statusOK'>Aria2 ONLINE</div>"
+		var statusKO = "<div class='statusKO'>Aria2 OFFLINE</div>"
+		$("#cluster").children().remove();
+		if(error != null) {
+			$("#cluster").append(statusKO);
+			console.log('KO');
+			return 'KO';
+		} else {
+			$("#cluster").append(statusOK);
+			console.log('OK');
+			return 'OK';
+		}
+	}
+
+	function ping(ip) {
+		/*console.log(cluster);
+		$.ajax({
+			url: cluster,
+			type: 'GET',
+			dataType: 'text',
+			success: function(data) {
+				isUp();
+			},
+			error: function(data) {
+				isDown();
+			}
+		});*/
+		
+			var ws = new WebSocket("ws://192.168.0.11:6800/jsonrpc");
+			ws.onerror = function(e){
+				isDown();
+				ws = null;
+			};
+			setTimeout(function() { 
+				if(ws != null) {
+					ws.close();
+					ws = null;
+					isUp();
+				}
+			},2000);
+	}
+	
+	function isUp() {
+		ariaServiceStatus(null)
+	}
+
+	function isDown() {
+		ariaServiceStatus('error')
+	}
+
 </script>
 {% endblock %}
 
@@ -85,25 +158,14 @@
 
 {% block body %}
 <div class="main_header">
-	<div class="row">
+	<div>
 		<div class="col-md-5 main_title">
-    		<a href="{{ path('d9_accueil_app') }}">
-    			{{ 'app.common.title' | trans }}
-    		</a>
+			<a href="{{ path('d9_accueil_app') }}"> {{ 'app.common.title' | trans }}
+			</a>
 		</div>
-			
 		<div id="system_info">
-			<div id="cluster">
-			{% if app.session.get('aria2_server') is not empty %}
-				<div id="clusterOn">
-					Aria2 ONLINE
-				</div>
-			{% else %}
-				<div id="clusterOff">
-					Aria2 OFFLINE
-				</div>
-			{% endif %}
-			</div>
+			<div id="cluster"></div>
+			<div id="database"></div>
 		</div>
 	</div>
 </div>
@@ -137,11 +199,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-12">
-			{% block bottom_content %}
-			{% endblock %}
-		</div>
+	<div>
+		{% block bottom_content %}
+		{% include "::footer_dev.html.twig" %}
+		{% endblock %}
 	</div>
 
 </div>

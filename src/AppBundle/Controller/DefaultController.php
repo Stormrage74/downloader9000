@@ -50,10 +50,8 @@ class DefaultController extends Controller
 	public function getInfo(Request $request)
 	{
 		if ($request->isXmlHttpRequest()) {
-			// from DATABASE
 			$aria = new Aria();
 			$aria_array = $this->get(A::DAO_DL)->getDownloadList($aria);
-			
 			if ($aria_array != false) {
 				// from RPC
 				$rpc = $this->cluster();
@@ -74,11 +72,14 @@ class DefaultController extends Controller
 					// 'sesssion' => $session,
 					// 'keys' => $keys,
 					// 'version' => $version,
-					'DLList' => $aria_array
 					// 'waiting' => $waiting,
 					// 'stop' => $stop
+					'DLList' => $aria_array,
+					'db_error' => null
 				)));
 				return $response;
+			} else {
+				return $response = new Response(json_encode(array('db_error'=>'db_com_error')));
 			}
 		} else {
 			throw new MethodNotAllowedHttpException(array(
@@ -106,11 +107,6 @@ class DefaultController extends Controller
 			// from RPC
 			$rpc = $this->cluster();
 			$results = $rpc->tellStatus($gid);
-			dump($results);
-			// if ($results['error']) {
-			// echo 'good';
-			// } else {
-			// $results = $status['result'];
 			$download->setStatus(isset($results['status']) ? $results['status'] : null)
 				->setTotalLength(isset($results['totalLength']) ? (($results['totalLength'] / 1024) / 1024) : null)
 				->setDownloadSpeed(isset($results['downloadSpeed']) ? $results['downloadSpeed'] . " Mo" : null)
