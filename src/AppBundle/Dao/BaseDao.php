@@ -151,4 +151,11 @@ class BaseDao {
             )
         );
     }
+    
+    /**
+     * test connection to database
+     */
+    public function testConnection() {
+    	
+    }
 }

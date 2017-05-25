@@ -31,23 +31,29 @@ class AriaDaoImpl extends BaseDao
 	}
 	
 	/**
-	 * 
+	 * insert new download in database
 	 * @param String $gid
 	 */
 	public function addDownload(Aria $aria) {
 		$result = false;
-		
 		if ($aria !== null) {
 			$sql = "INSERT INTO downloads(gid) VALUES ('".$aria->getGid()."')";
 			$result = $this->insertData($sql);
 			dump($result);
 		}
-		
 		if ($result) {
 			return $result;
 		}
-		
 		return false;
+	}
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \AppBundle\Dao\BaseDao::testConnection()
+	 */
+	public function testConnection() {
+		$result = $this->doSelectQuery("select 0+0 as result;");
+		return $result[0]['result'];
 	}
 	
 	/**

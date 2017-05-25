@@ -7,15 +7,17 @@
 	var urlStatus = "{{ path('d9_status_app', {'gid' : 'PLACEHOLDER'}) }}";
 	var urlAddUrl = "{{ path('d9_add_url_app', {'url' : 'PLACEHOLDER'}) }}";
 	var interval = 1000 * 2 * 1; // ms * s * m 
-	var cluster = "{{ app.session.get('aria2_server') }}";
-	
+	var clusterHttp = "{{ app.session.get('aria2_server') }}";
+	var clusterWs = "{{ app.session.get('aria2_server_ws') }}";
+	var dbstatus = "{{db_status}}";
+	{% dump(db_status) %}
 	$(document).ready(function() {
 		//setInterval(refreshInfos, interval);
 		$('#addUrl_valider').click(function () {
-			console.log('pret');
+			console.log('action dl');
 		});
-
-		ping(cluster);
+		ping(clusterWs);
+		databaseStatus(dbstatus);
 	});
 
 	// AJAX to get info from controller 
@@ -33,7 +35,23 @@
 		})
 	}
 
-	// treat AJAX RESPONSE to set download list view
+	// add url action
+	function addUrl(){
+		var link = $('#urlToAdd'.val());
+		$.ajax({
+			url: urlAddUrl.replace('PLACEHOLDER', link), 
+			type : 'POST',
+			dataType : 'json',
+			success: function(data) {
+				constructDList(data);
+			},
+			error: function() {
+				console.log('error');
+			}
+		})
+	}
+
+	// remplissage du tableau des telechargements
 	function constructDList(data) {
 		var dbStatus = databaseStatus(data['db_error']);
 		if(dbStatus == 'OK') {
@@ -76,57 +94,38 @@
 	 	})
 	}
 
-	// treat AJAX RESPONSE to set selected download status
-	function setGidInfo(status) {
-		for (let variable of status) {
-
-		}
-	}
-
 	function databaseStatus(error){
-		var statusOK = "<div class='statusOK'> Database ONLINE </div>"
-		var statusKO = "<div class='statusKO'> Database OFFLINE </div>"
-		$("#database").children().remove();
-		if(error != null) {
-			$("#database").append(statusKO);
-			console.log('KO');
-			return 'KO';
-		} else {
-			$("#database").append(statusOK);
-			console.log('OK');
-			return 'OK';
-		}
+		$("#database .statusOK").attr("hidden");
+		$("#database .statusKO").attr("hidden");
+		switch(error) {
+		case "0" : 
+			$("#database .statusOK").removeAttr("hidden");
+			break;
+		case "1" : 
+			$("#database .statusKO").removeAttr("hidden");
+			break;
+		case "2" :
+			$("#database .statusOK").removeAttr("hidden");
+			break
+			
+		default : 
+			$("#database .statusKO").removeAttr("hidden");
+	}
 	}
 
-	function ariaServiceStatus(error){
+	function ariaServicesStatus(error){
 		var statusOK = "<div class='statusOK'>Aria2 ONLINE</div>"
 		var statusKO = "<div class='statusKO'>Aria2 OFFLINE</div>"
 		$("#cluster").children().remove();
 		if(error != null) {
-			$("#cluster").append(statusKO);
-			console.log('KO');
-			return 'KO';
+			ariaErrorAppend(statusKO)
 		} else {
-			$("#cluster").append(statusOK);
-			console.log('OK');
-			return 'OK';
+			ariaErrorAppend(statusOK);
 		}
 	}
 
-	function ping(ip) {
-		/*console.log(cluster);
-		$.ajax({
-			url: cluster,
-			type: 'GET',
-			dataType: 'text',
-			success: function(data) {
-				isUp();
-			},
-			error: function(data) {
-				isDown();
-			}
-		});*/
-		
+	function ping(request) {
+		console.log(request);
 			var ws = new WebSocket("ws://192.168.0.11:6800/jsonrpc");
 			ws.onerror = function(e){
 				isDown();
@@ -142,12 +141,25 @@
 	}
 	
 	function isUp() {
-		ariaServiceStatus(null)
+		ariaServicesStatus(null)
 	}
 
 	function isDown() {
-		ariaServiceStatus('error')
+		ariaServicesStatus('error')
 	}
+
+	function dbErrorAppend(error_html) {
+		$("#database").append(error_html);
+		console.log('OK');
+		return 'OK';
+	}
+
+	function ariaErrorAppend(error_html) {
+		$("#cluster").append(error_html);
+		console.log('OK');
+		return 'OK';
+	}
+	
 
 </script>
 {% endblock %}
@@ -164,8 +176,14 @@
 			</a>
 		</div>
 		<div id="system_info">
-			<div id="cluster"></div>
-			<div id="database"></div>
+			<div id="cluster">
+				<div class='statusOK' hidden >Aria2 ONLINE</div>
+				<div class='statusKO' hidden >Aria2 OFFLINE</div>
+			</div>
+			<div id="database">
+				<div class='statusOK'>Database ONLINE</div>
+				<div class='statusKO'>Database OFFLINE</div>
+			</div>
 		</div>
 	</div>
 </div>

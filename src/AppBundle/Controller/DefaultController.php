@@ -20,10 +20,10 @@ class DefaultController extends Controller
 	 */
 	public function indexAction(Request $request)
 	{
-		// requeter la base de donn�e pour checker la base pour le user ?? bizarre
-		// replace this example code with whatever you need
-		return $this->render('default/index.html.twig', array(
-			'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR
+		// test de connexion
+		$checkDBConnection = $this->get(A::DAO_DL)->testConnection();
+		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
+			'db_status' => $checkDBConnection
 		));
 	}
 
@@ -35,7 +35,6 @@ class DefaultController extends Controller
 	 */
 	public function accueilAction(Request $request)
 	{
-		// var_dump($aria->getGlobalStat());
 		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
 			// ...
 		));
@@ -75,7 +74,7 @@ class DefaultController extends Controller
 					// 'waiting' => $waiting,
 					// 'stop' => $stop
 					'DLList' => $aria_array,
-					'db_error' => null
+					'db_error' => 0
 				)));
 				return $response;
 			} else {
@@ -211,11 +210,17 @@ class DefaultController extends Controller
 			$aria2 = new Aria2($this->get('session')->get('aria2_server'));
 			return $aria2;
 		} else {
-			$server = 'http://192.168.0.11'; // TODO:config element
+			$http = 'http';
+			$ws = 'ws';
+			$ip = '192.168.0.11';
+			$serverHTTP = $http.'://'.$ip; // TODO:config element
+			$serverWS = $ws.'://'.$ip;
 			$port = '6800'; // TODO:config element
 			$jsonPath = '/jsonrpc';
-			$chaine = $server . ':' . $port . '' . $jsonPath;
-			$this->get('session')->set('aria2_server', $chaine);
+			$chaineHTTP = $serverHTTP. ':' . $port . '' . $jsonPath;
+			$chaineWS = $serverWS. ':' . $port . '' . $jsonPath;
+			$this->get('session')->set('aria2_server', $chaineHTTP);
+			$this->get('session')->set('aria2_server_ws', $chaineWS);
 		}
 	}
 }
