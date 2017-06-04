@@ -22,8 +22,6 @@ class Aria2
 	
 	public function __call($name, $arg)
 	{
-		dump($name);
-		dump($arg);
 		$data = array(
 				'jsonrpc'=>'2.0',
 				'id'=>'1',
@@ -91,5 +89,6 @@ class Aria2
 		return $response;
 	}
 	*/
-	// Construction de l'URL à requêter à partir du tableau de paramètres
+	// Construction de l'URL ï¿½ requï¿½ter ï¿½ partir du tableau de paramï¿½tres
+
 }

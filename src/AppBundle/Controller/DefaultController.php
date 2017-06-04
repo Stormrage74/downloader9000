@@ -49,10 +49,10 @@ class DefaultController extends Controller
 	public function getInfo(Request $request)
 	{
 		if ($request->isXmlHttpRequest()) {
+			//call database
 			$aria = new Aria();
 			$aria_array = $this->get(A::DAO_DL)->getDownloadList($aria);
 			if ($aria_array != false) {
-				// from RPC
 				$rpc = $this->cluster();
 				// $stats = $rpc->getGlobalStat(); //ok
 				// $options = $rpc->getGlobalOption(); //ok
@@ -205,9 +205,10 @@ class DefaultController extends Controller
 	 */
 	private function cluster()
 	{
-		if (null !== $this->get('session')->get('aria2_server')) {
+		$session = $this->get('session')->get('aria2_server');
+		if (null !== $session) {
 			// construction du cluster
-			$aria2 = new Aria2($this->get('session')->get('aria2_server'));
+			$aria2 = new Aria2($session);
 			return $aria2;
 		} else {
 			$http = 'http';
