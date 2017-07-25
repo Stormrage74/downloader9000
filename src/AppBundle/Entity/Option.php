@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author gsimar
+ */
+
+namespace AppBundle\Entity;
 
 class Option{
 	private $allproxy;
