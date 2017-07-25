@@ -2,19 +2,45 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class AccueilController extends Controller
+class AccueilController extends BaseController
 {
+	
+	/**
+	 * @Route("/", name="d9_index")
+	 */
+	public function defaultAction(Request $request)
+	{
+		return $this->renderIndexView();
+	}
+	
 	 /**
-     * @Route("/toto", name="homepage")
+	 * @Route("/index", name="d9_homepage")
+     * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\Response
      */
 	public function indexAction ()
 	{
 		return $this->render('AppBundle:Accueil:index.html.twig', array(
 				//...
+		));
+	}
+	
+	/**
+	 * @Route("/accueil", name="d9_accueil")
+	 *
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+	public function accueilAction(Request $request)
+	{
+		return $this->renderIndexView();
+	}
+	
+	private function renderIndexView(){
+		return $this->render('AppBundle:Accueil:index.html.twig', array(
 		));
 	}
 	
