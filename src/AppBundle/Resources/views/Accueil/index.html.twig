@@ -3,163 +3,33 @@
 {% block javascripts %}
 <script type="text/javascript">
 
-	var urlInfos = "/app_dev.php/generalInfo"; //TODO : use asset twig instead
-	var urlStatus = "{{ path('d9_status_app', {'gid' : 'PLACEHOLDER'}) }}";
-	var urlAddUrl = "{{ path('d9_add_url_app', {'url' : 'PLACEHOLDER'}) }}";
-	var interval = 1000 * 2 * 1; // ms * s * m 
-	var clusterHttp = "{{ app.session.get('aria2_server') }}";
-	var clusterWs = "{{ app.session.get('aria2_server_ws') }}";
-	var dbstatus = "{{db_status}}";
-	{% dump(db_status) %}
-	$(document).ready(function() {
-		//setInterval(refreshInfos, interval);
-		$('#addUrl_valider').click(function () {
-			console.log('action dl');
-		});
-		ping(clusterWs);
-		databaseStatus(dbstatus);
+var url = 'http://downloader-dev:6800';
+
+$(document).on('click', '#addUriAction', function(e){
+	console.log($('#inputAddUri').val());
+	var uri = $('#inputAddUri').val();
+	//http://9e5p4g.alld.io/dl/12ttqhc4620/John.Wick.Chapter.2.2017.TRUEFRENCH.BDRip.x264-EXTREME.mkv
+	addUri(uri);
+});
+
+function addUri(uri){
+	var data = JSON.stringify({id : "qwer", jsonrpc : "2.0", method : "aria2.addUri", params : "['" + uri + "']"})
+	$.ajax({
+		url : url,
+		data : data,
+		crossDomain: true,
+		type : 'POST',
+		dataType : 'jsonp',
+		success : function(data){
+			console.log(data);
+			$('#result').append('<div>dl en cours ...</div>');
+		},
+		error : function(data) {
+			console.log(data);
+			alert('error occured');
+		}
 	});
-
-	// AJAX to get info from controller 
-	function refreshInfos() {
-		$.ajax({
-			url: urlInfos,
-			type : 'POST',
-			dataType : 'json',
-			success: function(data) {
-				constructDList(data);
-			},
-			error: function() {
-				console.log('error');
-			}
-		})
-	}
-
-	// add url action
-	function addUrl(){
-		var link = $('#urlToAdd'.val());
-		$.ajax({
-			url: urlAddUrl.replace('PLACEHOLDER', link), 
-			type : 'POST',
-			dataType : 'json',
-			success: function(data) {
-				constructDList(data);
-			},
-			error: function() {
-				console.log('error');
-			}
-		})
-	}
-
-	// remplissage du tableau des telechargements
-	function constructDList(data) {
-		var dbStatus = databaseStatus(data['db_error']);
-		if(dbStatus == 'OK') {
-			for (var dl of data['DLList']) {
-				var id = 'dl_'+dl['gid'];
-				var elem = document.getElementById(id);
-				if(elem === null){
-					var html = "<tr id='"+id+"'>";
-					html += "<td>"+dl['id']+"</td>";
-					html += "<td onclick='gidInfos(this)' class='gidClick'>"+dl['gid']+"</td>";
-					html += "</tr>";
-					$('tbody').append(html);
-				} else {
-					console.log(elem+' already exist');
-				}
-			}
-		} else {
-			$('tbody').children().remove();
-		}
-	}
-
-	function gidInfos(e) {
-		let value = $(e).text()
-		let url = urlStatus.replace("PLACEHOLDER", value);;
-	  	let key = 'gid'
-		 $.ajax({
-	 		url: url,
-	 		type: 'POST',
-	 		dataType: 'html',
-	 		success: function(data) {
-		 		if($('#leftContent').children().length > 0)
-			 		{
-		 				$('#leftContent').empty();
-		 			}
-		 		$('#leftContent').append(data);
-	 		},
-	 		error: function() {
-	 			console.log('error');
-	 		}
-	 	})
-	}
-
-	function databaseStatus(error){
-		$("#database .statusOK").attr("hidden");
-		$("#database .statusKO").attr("hidden");
-		switch(error) {
-		case "0" : 
-			$("#database .statusOK").removeAttr("hidden");
-			break;
-		case "1" : 
-			$("#database .statusKO").removeAttr("hidden");
-			break;
-		case "2" :
-			$("#database .statusOK").removeAttr("hidden");
-			break
-			
-		default : 
-			$("#database .statusKO").removeAttr("hidden");
-	}
-	}
-
-	function ariaServicesStatus(error){
-		var statusOK = "<div class='statusOK'>Aria2 ONLINE</div>"
-		var statusKO = "<div class='statusKO'>Aria2 OFFLINE</div>"
-		$("#cluster").children().remove();
-		if(error != null) {
-			ariaErrorAppend(statusKO)
-		} else {
-			ariaErrorAppend(statusOK);
-		}
-	}
-
-	function ping(request) {
-		console.log(request);
-			var ws = new WebSocket("ws://192.168.0.11:6800/jsonrpc");
-			ws.onerror = function(e){
-				isDown();
-				ws = null;
-			};
-			setTimeout(function() { 
-				if(ws != null) {
-					ws.close();
-					ws = null;
-					isUp();
-				}
-			},2000);
-	}
-	
-	function isUp() {
-		ariaServicesStatus(null)
-	}
-
-	function isDown() {
-		ariaServicesStatus('error')
-	}
-
-	function dbErrorAppend(error_html) {
-		$("#database").append(error_html);
-		console.log('OK');
-		return 'OK';
-	}
-
-	function ariaErrorAppend(error_html) {
-		$("#cluster").append(error_html);
-		console.log('OK');
-		return 'OK';
-	}
-	
+}
 
 </script>
 {% endblock %}
@@ -168,62 +38,17 @@
 {{ 'app.common.title' | trans }}
 {% endblock %}
 
-{% block body %}
-<div class="main_header">
-	<div>
-		<div class="col-md-5 main_title">
-			<a href="{{ path('d9_accueil_app') }}"> {{ 'app.common.title' | trans }}
-			</a>
-		</div>
-		<div id="system_info">
-			<div id="cluster">
-				<div class='statusOK' hidden >Aria2 ONLINE</div>
-				<div class='statusKO' hidden >Aria2 OFFLINE</div>
-			</div>
-			<div id="database">
-				<div class='statusOK'>Database ONLINE</div>
-				<div class='statusKO'>Database OFFLINE</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-2 leftPanel">
-			{% block nav_content %}
-			<div id="leftContent"></div>
-			{% endblock %}
-		</div>
-		<div class="col-md-8">
-			{% block middle_content %}
-			{% endblock %}
-		</div>
-		<div class="col-md-2">
-			{% block right_content %}
-			<div id="rightContent">
-				<div id="quickActionList" class="col-md-12">
-					<div id="actionTitle">Actions simples</div>
-					<div id="actionContent">
-						<div id="actionRefresh" class="quickAction"
-							onclick="refreshInfos()">&#187; Refresh</div>
-						<div id="actionAdd" class="quickAction" data-toggle="modal"
-							data-target="#modal_addUrl">
-							&#187;
-							{{ 'app.nav.action1' | trans }}
-						</div>
-					</div>
-				</div>
-				{% endblock %}
-			</div>
-		</div>
-	</div>
-	<div>
-		{% block bottom_content %}
-		{% include "::footer_dev.html.twig" %}
-		{% endblock %}
-	</div>
 
-</div>
-</div>
-{% include '@App/Accueil/templates/modal_addUrl.html.twig' %}
+{% block body %}
+<section>
+	<div>
+		Ajouter une URL
+	</div>
+	<div>
+		<input id="inputAddUri" type="text" placeholder="Indiquer une url ici">
+		<button id="addUriAction">Go</button>
+	</div>
+	<div id="result">
+	</div>
+</section>
 {% endblock %}

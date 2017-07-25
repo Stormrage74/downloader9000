@@ -1,0 +1,37 @@
+// Import Bootstrap Compass integration
+@import "bootstrap-compass";
+
+// Import custom Bootstrap variables
+@import "bootstrap-variables";
+
+// Import Bootstrap for Sass
+@import "bootstrap";
+
+//config custom
+@import "config";
+
+@font-face {
+	font-family: 'pixel_venture';
+	src: url('web/assets/font/pixel1/3Dventure.ttf') 	;
+}
+
+@font-face {
+    font-family: pixelfont; /*a name to be used later*/
+    src: url('web/assets/font/pixel2/slkscr.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: pixelfont-e; /*a name to be used later*/
+    src: url('web/assets/font/pixel2/slkscre.ttf'); /*URL to font*/
+
+}
+
+@font-face {
+    font-family: pixelfont-b; /*a name to be used later*/
+    src: url('web/assets/font/pixel2/slkscrb.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: pixelfont-eb; /*a name to be used later*/
+    src: url('web/assets/font/slkscreb.ttf'); /*URL to font*/
+}

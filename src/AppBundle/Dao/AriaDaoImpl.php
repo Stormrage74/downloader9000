@@ -2,7 +2,7 @@
 namespace AppBundle\Dao;
 use AppBundle\Model\Aria;
 use AppBundle\Dao\BaseDao;
-
+//TODO: a renommer en "DownloadsDaoImpl" 
 class AriaDaoImpl extends BaseDao
 {
 	/**
@@ -10,8 +10,10 @@ class AriaDaoImpl extends BaseDao
 	 * @param Aria $aria
 	 * @return boolean
 	 */
+	 // TODO: a refaire 
+	 /*
 	public function getDownloadList(Aria $aria) {
-		$query = $this->connection()
+		$query = $this->connection($this->getConnection())
 		->select('id, gid')
 		->from('downloads');
 		
@@ -28,7 +30,7 @@ class AriaDaoImpl extends BaseDao
 			return $result;
 		}
 		return false;
-	}
+	}*/
 	
 	/**
 	 * insert new download in database
@@ -54,13 +56,5 @@ class AriaDaoImpl extends BaseDao
 	public function testConnection() {
 		$result = $this->doSelectQuery("select 0+0 as result;");
 		return $result[0]['result'];
-	}
-	
-	/**
-	 * 
-	 * @return \Doctrine\DBAL\Query\QueryBuilder
-	 */
-	private function connection() {
-		return $this->getConnection()->createQueryBuilder();
 	}
 }

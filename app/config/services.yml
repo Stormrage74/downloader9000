@@ -16,4 +16,7 @@ services:
     app.download_dao:
       class: AppBundle\Dao\AriaDaoImpl
       arguments: ["@database_connection", "@logger"]
+    app.waiting_uris:
+      class: AppBundle\Dao\WaitingUrisDaoImpl
+      arguments: ["@database_connection", "@logger"]
     

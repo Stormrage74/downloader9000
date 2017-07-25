@@ -8,5 +8,6 @@ class AppBundle extends Bundle
 {
 	// downloader DAO
 	const DAO_DL = "app.download_dao";
+	const WAITINGS_URIS = "app.waiting_uris";
 	
 }

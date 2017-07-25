@@ -20,11 +20,7 @@ class DefaultController extends Controller
 	 */
 	public function indexAction(Request $request)
 	{
-		// test de connexion
-		$checkDBConnection = $this->get(A::DAO_DL)->testConnection();
-		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
-			'db_status' => $checkDBConnection
-		));
+		return $this->renderIndexView();
 	}
 
 	/**
@@ -35,9 +31,7 @@ class DefaultController extends Controller
 	 */
 	public function accueilAction(Request $request)
 	{
-		return $this->render('AppBundle:Accueil/templates:list.html.twig', array(
-			// ...
-		));
+		return $this->renderIndexView();
 	}
 
 	/**
@@ -54,15 +48,6 @@ class DefaultController extends Controller
 			$aria_array = $this->get(A::DAO_DL)->getDownloadList($aria);
 			if ($aria_array != false) {
 				$rpc = $this->cluster();
-				// $stats = $rpc->getGlobalStat(); //ok
-				// $options = $rpc->getGlobalOption(); //ok
-				// $active = $rpc->tellActive(); //ok
-				// $session = $rpc->getSessionInfo();
-				// $version = $rpc->getVersion();
-				// $waiting = $aria->tellWaiting(); // required gid
-				// $stop = $aria->tellStopped(); // required gid
-				// $status = $aria->tellStatus(); // required gid
-				
 				$rpc->destruct();
 				$response = new Response(json_encode(array(
 					// 'stats' => $stats,
@@ -151,8 +136,6 @@ class DefaultController extends Controller
 			
 			$rpc = $this->cluster();
 			$gid = $rpc->addUri($uris);
-			dump($gid);
-			$aria = new Aria();
 			$aria->setGid($gid['result']);
 			$result = $this->get(A::DAO_DL)->addDownload($aria);
 			
@@ -223,5 +206,18 @@ class DefaultController extends Controller
 			$this->get('session')->set('aria2_server', $chaineHTTP);
 			$this->get('session')->set('aria2_server_ws', $chaineWS);
 		}
+	}
+	
+	private function dbcheck(){
+		return 	$this->get(A::DAO_DL)->testConnection();
+	}
+	
+	private function getPendingDownloads(){
+		return $this->get(A::WAITINGS_URIS)->getAllUris();
+	}
+	
+	private function renderIndexView(){
+		return $this->render('AppBundle:Accueil:index.html.twig', array(
+		));
 	}
 }
