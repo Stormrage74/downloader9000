@@ -5,7 +5,6 @@
 
 namespace AppBundle\Entity;
 
-
-class DirectLink extends BaseDL{
+class Torrent extends BaseDL{
 	
 }
