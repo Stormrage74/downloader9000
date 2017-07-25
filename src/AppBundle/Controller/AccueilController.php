@@ -23,9 +23,7 @@ class AccueilController extends BaseController
      */
 	public function indexAction ()
 	{
-		return $this->render('AppBundle:Accueil:index.html.twig', array(
-				//...
-		));
+		return $this->renderIndexView();
 	}
 	
 	/**
